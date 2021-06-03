@@ -1,0 +1,46 @@
+* {
+  /* text-align: center; */
+
+  box-sizing: border-box;
+  
+}
+
+body {
+  display: block;
+  margin: 100px;
+  border: 3px solid aqua;
+}
+
+.container {
+  display: flex;
+}
+
+.left,
+.right {
+  /* margin-left: 7rem; */
+  /* width: 35%; */
+  padding: 100px;
+  /* padding: 2rem 1rem 2rem 3rem; */
+  border-right: 3px solid aqua;
+}
+
+.right {
+  border: none;
+}
+
+.header {
+  display: block;
+  text-align: center;
+  align-content: center;
+  /* flex-direction: column;
+  justify-content: center; */
+  position: relative;
+  margin-top: -3em;
+  background-color: white;
+  width: 25%;
+  left: 37.5%;
+}
+
+.left > h3:first-child {
+  color: aqua;
+}
