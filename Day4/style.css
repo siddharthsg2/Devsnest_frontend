@@ -51,7 +51,6 @@
 .hours {
   height: 120px;
   width: 0px;
-  /* background-color: red; */
   border: 5px solid blue;
   display: block;
   position: absolute;
