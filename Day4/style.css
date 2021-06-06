@@ -16,9 +16,10 @@
 .clock {
   height: 400px;
   width: 400px;
-  border: 20px solid black;
+  box-shadow: 20px 20px 15px 5px rgba(0,0,0,0.7);
+-webkit-box-shadow: 20px 20px 15px 5px rgba(0,0,0,0.7);
+-moz-box-shadow: 20px 20px 15px 5px rgba(0,0,0,0.7);
   border-radius: 400px;
-  box-shadow: rgba(90, 88, 88, 0.5) 50px 50px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -67,7 +68,7 @@
   position: absolute;
   border-radius: 50%;
   top: 50%;
-  left: 50%;
+  left: 51%;
   transform: translate(-50%, -50%);
 }
 
