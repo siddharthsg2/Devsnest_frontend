@@ -35,10 +35,22 @@ var displayCard = function (){
     this.classList.toggle("hidden");
 };
 
+randomize=(d)=>{
+    for (var c = d.length - 1; c > 0; c--) {
+        var b = Math.floor(Math.random() * (c + 1));
+        var a = d[c];
+        d[c] = d[b];
+        d[b] = a;
+      }
+      return d
+}
+
 shuffle=()=>{
-    var emojis = ['🙃', '🤪', '💩', '👻', '⭐', '🍕', '🥩', '🍭', '🍆', '🍑', '👽', '🤖', '👾', '👋', '🐭', '🦕','🦖', '🐉', '🍬', '💦']
-    var she = emojis.sort(()=> Math.random() - 0.9 ).slice(0,gamerange.value/2)
-    she.concat(she).forEach((element, i) => {
+    var emojis = ['🙃', '🤪', '💩', '👻', '⭐', '🍕', '🥩', '🍭', '🍆', '🍑', '👽', '🤖', '👾', '👋', '🐭', '🦕','🦖', '🐉', '🍬', '💦','🍤']
+    var she = emojis.sort(()=> 0.5 - Math.random() ).slice(0,gamerange.value/2)
+    var rand = randomize(she.concat(she))
+    console.log(rand);
+    rand.forEach((element, i) => {
         var ele = document.getElementById(i)
         ele.innerHTML = `<div class="bd-notification emojicard hidden animate__animated">${element}</div>`
     });
