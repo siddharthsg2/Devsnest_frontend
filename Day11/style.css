@@ -59,6 +59,7 @@ input:hover {
   color: white;
   background-color: rgb(122, 122, 255);
   margin-top: 4rem;
+  cursor: pointer;
 }
 
 #submit:hover {
@@ -72,6 +73,11 @@ input:hover {
   box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.7);
   -webkit-box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.7);
   -moz-box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.7);
+}
+
+#showScore h3{
+  font-size: 3rem;
+  text-align: center ;
 }
 
 .scoreArea {
