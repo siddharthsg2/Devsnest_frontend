@@ -75,9 +75,9 @@ input:hover {
   -moz-box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.7);
 }
 
-#showScore h3{
+#showScore h3 {
   font-size: 3rem;
-  text-align: center ;
+  text-align: center;
 }
 
 .scoreArea {
