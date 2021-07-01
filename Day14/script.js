@@ -19,10 +19,10 @@ b3.addEventListener("mouseout", () => {
   b3.innerHTML = "Hover On Me";
 });
 
-b4.addEventListener("onmousedown", () => {
+b4.addEventListener("mousedown", () => {
   b4.innerHTML = "Magic!!";
 });
 
-b4.addEventListener("onmouseup", () => {
+b4.addEventListener("mouseup", () => {
   b4.innerHTML = "Click n Hold";
 });
