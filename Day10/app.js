@@ -9,9 +9,10 @@ var openedCards = [];
 var matchedCards = 0 ;
 
 let moves = 0;
+let lockBoard = false;
 
 gamerange.oninput = function () {
-    subtitle.innerHTML = `${this.value}</code>`
+    subtitle.innerHTML = this.value
 }
 
 startgame.onclick = () => {
@@ -27,13 +28,32 @@ startgame.onclick = () => {
     setTimeout(displaytime, 1000);
 
     openedCards = [];
+    matchedCards = 0;
+    moves = 0;
+    counter.innerHTML = 0;
     shuffle()
     startlogic()
+    arrangeCards()
 }
 
-var displayCard = function (){
-    this.classList.toggle("hidden");
-};
+arrangeCards=()=>{
+    var cards = document.querySelectorAll(".emojicard")
+    if(!cards.length) return
+    var board = document.getElementById('gcards')
+    var narrow = window.innerWidth < 640
+    var cols = cards.length <= 12 ? (narrow ? 3 : 4)
+             : cards.length <= 24 ? (narrow ? 4 : 6)
+             : (narrow ? 4 : 8)
+    var rows = Math.ceil(cards.length / cols)
+    var available = window.innerHeight - board.getBoundingClientRect().top - 24
+    var gap = 10
+    var height = Math.floor(available / rows) - gap
+    height = Math.max(36, Math.min(height, 110))
+    board.style.setProperty('--cols', cols)
+    board.style.setProperty('--card-h', height + 'px')
+}
+
+window.onresize = () => arrangeCards()
 
 randomize=(d)=>{
     for (var c = d.length - 1; c > 0; c--) {
@@ -49,70 +69,52 @@ shuffle=()=>{
     var emojis = ['🙃', '🤪', '💩', '👻', '⭐', '🍕', '🥩', '🍭', '🍆', '🍑', '👽', '🤖', '👾', '👋', '🐭', '🦕','🦖', '🐉', '🍬', '💦','🍤']
     var she = emojis.sort(()=> 0.5 - Math.random() ).slice(0,gamerange.value/2)
     var rand = randomize(she.concat(she))
-    console.log(rand);
     rand.forEach((element, i) => {
         var ele = document.getElementById(i)
         ele.innerHTML = `<div class="bd-notification emojicard hidden animate__animated">${element}</div>`
     });
 }
 
-function moveCounter(){
-    moves++;
-    counter.innerHTML = moves;
-}
-
-cardOpen=()=>{
-    console.log(this);
-    openedCards.push(this);
-    var len = openedCards.length;
-    if(len === 2){
-        moveCounter();
-        if(openedCards[0].innerText === openedCards[1].innerText){
-            matched();
-        } else {
-            unmatched();
-        }
-    }
-}
-
 startlogic=()=>{
     var allcards = document.querySelectorAll(".emojicard")
-    Array.from(allcards).forEach((element,index) => {
-        element.addEventListener("click", (x) => {
-            element.classList.toggle("hidden");
-            openedCards.push(element);
-            var len = openedCards.length;
-            if(len === 2){
-                moveCounter();
-                if(openedCards[0].innerText === openedCards[1].innerText){
-                    matchedCards +=2
-                    matched();
+    Array.from(allcards).forEach((element) => {
+        element.addEventListener("click", () => {
+            if (lockBoard) return
+            if (element === openedCards[0]) return
+            if (element.classList.contains("match")) return
+
+            element.classList.remove("hidden")
+            openedCards.push(element)
+
+            if (openedCards.length === 2) {
+                moves++
+                counter.innerHTML = moves
+                lockBoard = true
+                if (openedCards[0].innerText === openedCards[1].innerText) {
+                    matchedCards += 2
+                    openedCards[0].classList.add("match","animate__bounceIn")
+                    openedCards[1].classList.add("match","animate__bounceIn")
+                    openedCards = []
+                    lockBoard = false
+                    if (matchedCards === Number(gamerange.value)) {
+                        setTimeout(wingame, 500)
+                    }
                 } else {
-                    unmatched();
+                    setTimeout(function(){
+                        openedCards[0].classList.add("hidden","animate__flipInY")
+                        openedCards[1].classList.add("hidden","animate__flipInY")
+                        openedCards = []
+                        lockBoard = false
+                    }, 700)
                 }
             }
-            if(matchedCards == gamerange.value){
-                document.getElementById('congo').style.display = 'block'
-                document.getElementById('info').innerText = `You took ${moves} Moves in ${document.getElementById('timer').innerText}`
-            } 
         })
     })
 }
 
-matched=()=>{
-    openedCards[0].classList.add("match","animate__bounceIn");
-    openedCards[1].classList.add("match","animate__bounceIn");
-    openedCards = [];
-}
-
-unmatched=()=>{
-
-    // disable();
-    setTimeout(function(){
-        openedCards[0].classList.add("hidden","animate__flipInY");
-        openedCards[1].classList.add("hidden","animate__flipInY");
-        openedCards = [];
-    },200);
+wingame=()=>{
+    document.getElementById('congo').classList.add('is-active')
+    document.getElementById('info').innerText = `You took ${moves} Moves in ${document.getElementById('timer').innerText}`
 }
 
 var startTime;
